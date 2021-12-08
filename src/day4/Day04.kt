@@ -1,3 +1,7 @@
+package day4
+
+import readInput
+
 fun main() {
     val bingoSize = 5
 

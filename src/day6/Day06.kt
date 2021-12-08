@@ -1,3 +1,7 @@
+package day6
+
+import readInput
+
 fun main() {
     fun part1(input: List<String>): Int {
         return (0 until 80).fold(input.first().split(',').map { it.toInt() }) { acc: List<Int>, new: Int ->
