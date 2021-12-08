@@ -68,7 +68,7 @@ fun main() {
             .size
     }
 
-    val input = readInput("Day05")
+    val input = readInput("day5/Day05")
     println(part1(input))
     println(part2(input))
 }

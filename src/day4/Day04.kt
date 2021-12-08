@@ -36,7 +36,7 @@ fun main() {
             .let { it.second.calculateScore(it.first) }
     }
 
-    val input = readInput("Day04")
+    val input = readInput("day4/Day04")
     println(part1(input))
     println(part2(input))
 }

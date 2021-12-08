@@ -30,7 +30,7 @@ fun main() {
             }.second
     }
 
-    val input = readInput("Day01")
+    val input = readInput("day1/Day01")
     println(part1(input))
     println(part2(input))
 }

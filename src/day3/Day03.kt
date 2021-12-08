@@ -24,7 +24,7 @@ fun main() {
         return Rating.OXYGEN_GENERATOR_RATING.getValueFor(input) * Rating.CO2_SCRUBBER_RATING.getValueFor(input)
     }
 
-    val input = readInput("Day03")
+    val input = readInput("day3/Day03")
     println(part1(input))
     println(part2(input))
 }
