@@ -31,40 +31,15 @@ fun main() {
 
         val points = rows.flatMapIndexed { rowIndex, row ->
             row.mapIndexed { columnIndex, element ->
-                Point(x = columnIndex, y = rowIndex, value = element)
+                Triple(columnIndex, rowIndex, element)
             }
         }
-            .filter { it.value != 9 }
-            .onEach { println(it) }
+            .filter { it.third != 9 }
 
-        val clusteredPoints = mutableListOf<Point>()
-
-        val clusters = mutableMapOf<Int, List<Point>>()
         var clusterId = 0
 
-        points.flatMap { point ->
-            val neighbours = points.filter {
-                (it.x == point.x && abs(point.y - it.y) == 1) ||
-                        (it.y == point.y && abs(point.x - it.x) == 1)
-            } + point
-
-            if (neighbours.none { point -> clusters.any { it.value.contains(point) } }) clusterId += 1
-
-            neighbours
-                .mapNotNull {
-                    if (it !in clusteredPoints) {
-                        clusteredPoints.add(it)
-                        clusters[clusterId] = clusters[clusterId]?.plus(it) ?: listOf(it)
-                        Pair(clusterId, it)
-                    } else null
-                }
-        }
-            .groupBy { it.first }
-            .mapValues { Pair(it.value.size, it.value) }
-            .forEach { println(it) }
-
         val initialClusters = points
-            .map { ClusterPoint(it.x, it.y, it.value) }
+            .map { ClusterPoint(it.first, it.second, it.third) }
             .foldIndexed(listOf()) { index: Int, acc: List<ClusterPoint>, point: ClusterPoint ->
                 acc + (if (acc.isEmpty()) point.copy(clusterId = clusterId) else
                     acc.find {
@@ -80,8 +55,6 @@ fun main() {
                         })
             }
             .groupBy { it.clusterId }
-            .onEach { println(it) }
-
 
         val alreadyValidClusters = initialClusters.filterNot { (index, clusterPoints) ->
             initialClusters.filterNot { it.key == index }
@@ -136,12 +109,6 @@ data class ClusterPoint(
                     (this.y == point.y && abs(point.x - this.x) == 1)
         }
 }
-
-data class Point(
-    val x: Int,
-    val y: Int,
-    val value: Int
-)
 
 private fun List<Int>.getAllLocalMinimums(): List<Pair<Int, Boolean>> {
     val width = this.size
